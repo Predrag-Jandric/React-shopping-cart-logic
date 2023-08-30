@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container, Navbar, Modal } from 'react-bootstrap'
 
 function NavbarComp() {
+
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
   return (
-    <Navbar expand="sm">
+    <>
+      <Navbar expand="sm">
         <Navbar.Brand href="/">Ecommerce Store</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Button>Cart 0 Items</Button>
+          <Button onClick={handleShow}>Cart 0 Items</Button>
         </Navbar.Collapse>
-    </Navbar>
+      </Navbar>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Shopping Cart</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h1>modal body</h1>
+        </Modal.Body>
+      </Modal>
+    </>
   )
 }
 
