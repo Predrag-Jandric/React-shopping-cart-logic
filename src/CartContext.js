@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { productsArray } from "./productsStore";
+import { productsArray, getProductData } from "./productsStore";
 
 // creating empty functions
 const CartContext = createContext({
@@ -11,7 +11,7 @@ const CartContext = createContext({
     getTotalCost: () => { },
 })
 
-export function CartProvider({ children }) {
+export default function CartProvider({ children }) {
 
     const [cartProducts, setCartProducts] = useState([])
 
@@ -47,6 +47,39 @@ export function CartProvider({ children }) {
         }
     }
 
+    function removeOneFromCart(id) {
+        const quantity = getProductQuantity(id)
+
+        if (quantity === 1) {
+            deleteFromCart(id)
+        } else {
+            setCartProducts(
+                cartProducts.map(product => product.id === id
+                    ? { ...product, quantity: product.quantity - 1}
+                    : product
+                )
+            )
+        }
+    }
+
+    function getTotalCost(){
+        let totalCost = 0
+        cartProducts.map((cartItem) => {
+            const productData = getProductData(cartItem.id)
+            totalCost += (productData.price * cartItem.quantity)
+        })
+        return totalCost
+    }
+
+    function deleteFromCart(id) {
+        setCartProducts(
+            cartProducts => 
+            cartProducts.filter(currentProduct => {
+                return currentProduct.id != id
+            })
+        )
+    }
+
     // defining these empty functions
     const contextValue = {
         items: [],
@@ -57,8 +90,8 @@ export function CartProvider({ children }) {
         getTotalCost,
     }
     return (
-        <CardContext.Provider value={contextValue}>
+        <CartContext.Provider value={contextValue}>
             {children}
-        </CardContext.Provider>
+        </CartContext.Provider>
     )
 }
