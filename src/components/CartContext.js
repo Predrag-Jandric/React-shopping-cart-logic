@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { productsArray, getProductData } from "./productsStore";
+import { getProductData } from "./productsStore";
 
 // creating empty functions
 export const CartContext = createContext({
@@ -70,7 +70,7 @@ export function CartProvider({ children }) {
         setCartProducts(
             cartProducts =>
                 cartProducts.filter(currentProduct => {
-                    return currentProduct.id != id
+                    return currentProduct.id !== id
                 })
         )
     }
@@ -78,6 +78,7 @@ export function CartProvider({ children }) {
     // Get Total Cost
     function getTotalCost() {
         let totalCost = 0
+    // eslint-disable-next-line
         cartProducts.map((cartItem) => {
             const productData = getProductData(cartItem.id)
             totalCost += (productData.price * cartItem.quantity)

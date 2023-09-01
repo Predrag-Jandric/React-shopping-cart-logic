@@ -2,18 +2,18 @@
 const productsArray = [
     {
         id: "1",
-        title: "coffee",
-        price: 5.34
+        title: "Coffee",
+        price: 5.55
     },
     {
         id: "2",
-        title: "car",
-        price: 1.23
+        title: "Water bottle",
+        price: 34.29
     },
     {
         id: "3",
-        title: "mobile",
-        price: 34.4
+        title: "Mobile",
+        price: 399.99
     },
 ]
 
